@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     joinBtn.classList.toggle('show', isValid);
   });
 
-  // 🔐 방 입장
+  //방 입장
   joinBtn.addEventListener('click', () => {
     const room = roomInput.value.trim();
     if (!room || room.length !== 4) {
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     socket.emit('join-room', room);
     result.textContent = `${room}`;
 
-    // ✅ 화면 전환
+    //화면 전환
     document.getElementById('joinScreen').style.display = 'none';
     document.getElementById('mainScreen').style.display = 'block';
   });
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   });
-  // 📤 파일 업로드
+  //파일 업로드
   async function uploadFile(file) {
     if (!currentRoom) return alert('방에 먼저 입장하세요.');
 
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
       fileInput.value = '';
 
       if (!res.ok || !json.success) {
-        // ❌ 업로드 실패: dropArea 흔들리게 하기
+        //업로드 실패: dropArea 흔들리게 하기
         const drop = document.getElementById('dropArea');
         drop.classList.add('drop-error');
 
@@ -87,14 +87,14 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 
-  // 📁 파일 선택 시 자동 업로드
+  //파일 선택 시 자동 업로드
   fileInput.addEventListener('change', () => {
     if (fileInput.files.length > 0) {
       uploadFile(fileInput.files[0]);
     }
   });
 
-  // 📥 드래그 앤 드롭 업로드
+  //드래그 앤 드롭 업로드
   if (dropArea) {
     ['dragenter', 'dragover'].forEach(event => {
       dropArea.addEventListener(event, e => {
@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 📃 서버로부터 받은 파일 목록 렌더링
+  //서버로부터 받은 파일 목록 렌더링
   function renderList(files) {
     listEl.innerHTML = '';
     files
@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
-  // 🗑️ 삭제 버튼 클릭 이벤트 위임
+  //삭제 버튼 클릭 이벤트 위임
   listEl.addEventListener('click', async (e) => {
     const btn = e.target;
     if (btn.classList.contains('delete-btn')) {
@@ -156,13 +156,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // 🔁 실시간 파일 목록 수신
+  //실시간 파일 목록 수신
   socket.on('file-list', ({ files, totalSize, maxSize }) => {
     renderList(files);
     updateCapacityBar(totalSize, maxSize);
     document.getElementById('noticeText').textContent = `Max ${formatBytes(maxSize)} per Room`;
   });
-
 
   function updateCapacityBar(used, max) {
     const percent = Math.min((used / max) * 100, 100);
@@ -180,7 +179,6 @@ document.addEventListener('DOMContentLoaded', () => {
       bar.style.width = percent + '%';
     }
   }
-
 
   function formatBytes(bytes) {
     const units = ['B', 'KB', 'MB', 'GB'];

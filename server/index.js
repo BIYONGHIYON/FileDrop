@@ -19,13 +19,13 @@ const uploadBase = path.join(__dirname, 'uploads');
 // 정적 파일 서빙
 app.use(express.static(path.join(__dirname, '../public')));
 
-// ✅ uploads 폴더가 없으면 생성
+//uploads 폴더가 없으면 생성
 if (!fs.existsSync(uploadBase)) fs.mkdirSync(uploadBase);
 
-// ✅ 방 디렉토리 생성 함수
+//방 디렉토리 생성 함수
 function getRoomDir(roomCode) {
   if (!roomCode || typeof roomCode !== 'string') {
-    console.error('❌ roomCode is invalid:', roomCode);
+    console.error('roomCode is invalid:', roomCode);
     return null;
   }
 
@@ -40,7 +40,7 @@ const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const room = req.params.room;
     if (!room) {
-      console.error('❌ 업로드 요청에 room 정보 없음');
+      console.error('업로드 요청에 room 정보 없음');
       return cb(new Error('Room code missing'), null);
     }
     const roomDir = getRoomDir(room);
@@ -91,7 +91,7 @@ app.post('/upload/:room', upload.single('file'), async (req, res) => {
   if (currentSize + fileSize > MAX_ROOM_SIZE) {
     // 업로드된 파일 삭제
     fs.unlinkSync(path.join(roomDir, fileName));
-    console.warn(`🚫 방 [${room}] 용량 초과로 업로드 거부`);
+    console.warn(`방 [${room}] 용량 초과로 업로드 거부`);
 
     return res.status(400).json({
       success: false,
@@ -106,7 +106,7 @@ app.post('/upload/:room', upload.single('file'), async (req, res) => {
 
 
 
-// ✅ 삭제 라우터
+//삭제 라우터
 app.delete('/delete/:filename', (req, res) => {
   const filename = req.params.filename;
   const room = req.query.room;
@@ -124,10 +124,10 @@ app.delete('/delete/:filename', (req, res) => {
   });
 });
 
-// ✅ 업로드된 파일 static 제공
+//업로드된 파일 static 제공
 app.use('/uploads', express.static(uploadBase));
 
-// ✅ 파일 목록 전송
+//파일 목록 전송
 function sendFileList(socket, room) {
   const dir = getRoomDir(room);
   fs.readdir(dir, async (err, files) => {
@@ -185,11 +185,11 @@ function broadcastFileList(room) {
 }
 
 
-// ✅ WebSocket 연결
+//WebSocket 연결
 io.on('connection', socket => {
   console.log('클라이언트 연결됨');
 
-  // ✅ 방 입장
+  //방 입장
   socket.on('join-room', room => {
     socket.join(room);
     socket.joinedRoom = room; // 방 정보 기억
@@ -197,7 +197,7 @@ io.on('connection', socket => {
     sendFileList(socket, room); // 파일 목록 전송
   });
 
-  // ✅ 클라이언트 퇴장 처리
+  //클라이언트 퇴장 처리
   socket.on('disconnect', () => {
     const room = socket.joinedRoom;
     if (!room) return;
@@ -206,15 +206,15 @@ io.on('connection', socket => {
     setTimeout(() => {
       const roomUsers = io.sockets.adapter.rooms.get(room);
       if (!roomUsers || roomUsers.size === 0) {
-        console.log(`🧹 방 ${room}에 아무도 없으므로 디렉토리 삭제`);
+        console.log(`방 ${room}에 아무도 없으므로 디렉토리 삭제`);
 
         const dir = getRoomDir(room);
         if (fs.existsSync(dir)) {
           fs.rm(dir, { recursive: true, force: true }, err => {
             if (err) {
-              console.error(`❌ 디렉토리 삭제 실패 [${room}]:`, err);
+              console.error(`디렉토리 삭제 실패 [${room}]:`, err);
             } else {
-              console.log(`📁 [${room}] 디렉토리와 파일들 삭제 완료`);
+              console.log(`[${room}] 디렉토리와 파일들 삭제 완료`);
             }
           });
         }
@@ -224,7 +224,7 @@ io.on('connection', socket => {
 });
 
 
-// ✅ 서버 실행
+//서버 실행
 server.listen(PORT, () => {
   console.log(`서버 실행 중: http://localhost:${PORT}`);
 });

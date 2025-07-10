@@ -33,8 +33,8 @@ input[type=number]::-webkit-outer-spin-button {
         0px 0px 40px #383e4b;
     padding: 0.3rem;
     gap: 0.3rem;
-    max-width: 200px; /* 원하는 너비로 조절 */
-    margin: 0 auto;    /* 가운데 정렬 (선택사항) */
+    max-width: 200px;
+    margin: 0 auto;
 }
 
 .input-container input {
@@ -49,8 +49,8 @@ input[type=number]::-webkit-outer-spin-button {
         0px 0px 100px rgba(255, 102, 0, 0);
     width: 100%;
     flex-basis: 100%;
-    max-width: 200px; /* 원하는 너비로 조절 */
-    margin: 0 auto;    /* 가운데 정렬 (선택사항) */
+    max-width: 200px;
+    margin: 0 auto;
     padding: 1rem;
     border: none;
     border: 1px solid transparent;
@@ -80,7 +80,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 #joinBtn {
     opacity: 0;
-    pointer-events: none;  /* 클릭 방지 */
+    pointer-events: none;
     transform: scale(0.95);
     transition: opacity 0.4s ease, transform 0.4s ease;
     background-color: #ffffff00;
@@ -125,7 +125,7 @@ input[type=number]::-webkit-outer-spin-button {
   position: relative;
   width: 30rem;
   height: 4rem;
-  margin: auto; /* 좌우 auto로 중앙 정렬 */
+  margin: auto;
   margin-top:10em;
   background: #29292c;
   border-radius: 1rem;
@@ -142,23 +142,23 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .notification:before {
-  position: absolute;
-  content: "";
-  inset: 0.0625rem;
-  border-radius: 0.9375rem;
-  background: #18181b;
-  z-index: 2
-}
+    position: absolute;
+    content: "";
+    inset: 0.0625rem;
+    border-radius: 0.9375rem;
+    background: #18181b;
+    z-index: 2
+    }
 
 .notification:after {
-  position: absolute;
-  content: "";
-  width: 0.25rem;
-  inset: 0.65rem auto 0.65rem 0.5rem;
-  border-radius: 0.125rem;
-  background: var(--gradient);
-  transition: transform 300ms ease;
-  z-index: 4;
+    position: absolute;
+    content: "";
+    width: 0.25rem;
+    inset: 0.65rem auto 0.65rem 0.5rem;
+    border-radius: 0.125rem;
+    background: var(--gradient);
+    transition: transform 300ms ease;
+    z-index: 4;
 }
 
 .notification:hover:after {
@@ -166,12 +166,12 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .notititle {
-  color: var(--color);
-  padding: 0.65rem 0.25rem 0.4rem 1.25rem;
-  font-weight: 500;
-  font-size: 1.1rem;
-  transition: transform 300ms ease;
-  z-index: 5;
+    color: var(--color);
+    padding: 0.65rem 0.25rem 0.4rem 1.25rem;
+    font-weight: 500;
+    font-size: 1.1rem;
+    transition: transform 300ms ease;
+    z-index: 5;
 }
 
 .notification:hover .notititle {
@@ -179,59 +179,59 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .notibody {
-  color: #99999d;
-  padding: 0 1.25rem;
-  transition: transform 300ms ease;
-  z-index: 5;
+    color: #99999d;
+    padding: 0 1.25rem;
+    transition: transform 300ms ease;
+    z-index: 5;
 }
 
 .notification:hover .notibody {
-  transform: translateX(0.25rem)
+    transform: translateX(0.25rem)
 }
 
 .notiglow,
 .notiborderglow {
-  position: absolute;
-  width: 20rem;
-  height: 20rem;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(circle closest-side at center, white, transparent);
-  opacity: 0;
-  transition: opacity 300ms ease;
+    position: absolute;
+    width: 20rem;
+    height: 20rem;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle closest-side at center, white, transparent);
+    opacity: 0;
+    transition: opacity 300ms ease;
 }
 
 .notiglow {
-  z-index: 3;
+    z-index: 3;
 }
 
 .notiborderglow {
-  z-index: 1;
+    z-index: 1;
 }
 
 .notification:hover .notiglow {
-  opacity: 0.1
+    opacity: 0.1
 }
 
 .notification:hover .notiborderglow {
-  opacity: 0.1
+    opacity: 0.1
 }
 
 .note {
-  color: var(--color);
-  position: fixed;
-  top: 80%;
-  left: 50%;
-  transform: translateX(-50%);
-  text-align: center;
-  font-size: 0.9rem;
-  width: 75%;
+    color: var(--color);
+    position: fixed;
+    top: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    font-size: 0.9rem;
+    width: 75%;
 }
 
 .box{
     display: flex;
-    justify-content: center; /* 가로 중앙 정렬 */
-    align-items: center;     /* 세로 중앙 정렬 (선택사항) */
-    gap: 2rem;             /* 카드와 폼 사이 간격 */
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
     margin-top: -3em;
 }
 
@@ -387,20 +387,20 @@ input[type=number]::-webkit-outer-spin-button {
     max-height: 300px;
     overflow-y: auto;
 }
-/* 아래의 모든 코드는 영역::코드로 사용 */
+
 #fileList::-webkit-scrollbar {
-    width: 10px;  /* 스크롤바의 너비 */
+    width: 10px;
 }
 
 #fileList::-webkit-scrollbar-thumb {
-    height: 30%; /* 스크롤바의 길이 */
-    background: #2eadff; /* 스크롤바의 색상 */
+    height: 30%;
+    background: #2eadff; 
     
     border-radius: 10px;
 }
 
 #fileList::-webkit-scrollbar-track {
-    background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
+    background: rgba(33, 122, 244, .1); 
 }
   
 #fileList a {
@@ -449,5 +449,5 @@ input[type=number]::-webkit-outer-spin-button {
 
 .drop-error {
   animation: shake 0.4s;
-  border-color: red !important; /* 선택사항 */
+  border-color: red !important;
 }
