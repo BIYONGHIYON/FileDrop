@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="style.css?after" rel="stylesheet" type="text/css" />
+  <link rel="icon" href="icon.png?ver=1" />
+  <link rel="apple-touch-icon" href="icon.png?ver=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <title>FileDrop</title>
+</head>
+<body>
+  <h1>FileDrop</h1>
+
+  <!-- 공유 코드 입력 화면 -->
+  <div id="joinScreen">
+    <div class="input-container">
+      <input placeholder="Enter Room Code" id="roomInput" type="number" />
+    </div>
+    <br>
+    <button type="button" id="joinBtn">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"></path>
+      </svg>
+      <div class="text">Join</div>
+    </button>
+    <div class="notification">
+      <div class="notiglow"></div>
+      <div class="notiborderglow"></div>
+      <div class="notititle">How to Use</div>
+      <div class="notibody">Enter the same 4-digit code to join the same room and share files.</div>
+    </div>
+  </div>
+
+  <!-- 본 화면 (파일 업로드) -->
+  <div id="mainScreen" style="display: none;">
+    <div class="box">
+      <div class="left-box">
+        <div class="notification" id="note2">
+          <div class="notiglow"></div>
+          <div class="notiborderglow"></div>
+          <div class="notititle">Notice</div>
+          <div class="notibody" id="noticeText">Max 500MB per Room</div>
+        </div>
+        <div class="card">
+          <div class="label">Room Number</div>
+          <div class="value" id="result">1234</div>
+        </div>
+        <div class="card">
+          <div class="label">Used Capacity</div>
+          <div class="value" id="capacity"></div>
+            <div class="progress-container">
+              <div class="progress-bar" id="capacityBar"></div>
+            </div>
+        </div>
+      </div>
+      <div class="right-box">
+        <form id="uploadForm" enctype="multipart/form-data">
+          <label for="file" id="dropArea" class="file-upload-label">
+            <div class="file-upload-design">
+              <svg viewBox="0 0 640 512" height="1em">
+                <path d="M144 480C64.5 480 0 415.5 0 336c0-62.8 40.2-116.2 96.2-135.9c-.1-2.7-.2-5.4-.2-8.1c0-88.4 71.6-160 160-160c59.3 0 111 32.2 138.7 80.2C409.9 102 428.3 96 448 96c53 0 96 43 96 96c0 12.2-2.3 23.8-6.4 34.6C596 238.4 640 290.1 640 352c0 70.7-57.3 128-128 128H144zm79-217c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l39-39V392c0 13.3 10.7 24 24 24s24-10.7 24-24V257.9l39 39c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0l-80 80z"></path>
+              </svg>
+              <p>Drag and Drop</p>
+              <span class="browse-button">Browse file</span>
+            </div>
+            <input id="file" type="file" name="file" required />
+          </label>
+        </form>
+      </div>
+    </div>
+    <ul id="fileList"></ul>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
