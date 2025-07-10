@@ -11,7 +11,11 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () => {
+  console.log(`서버 실행 중: http://localhost:${PORT}`);
+});
+
 const uploadBase = path.join(__dirname, 'uploads');
 
 
@@ -221,10 +225,4 @@ io.on('connection', socket => {
       }
     }, 60000); // 1분 후 검사 및 삭제
   });
-});
-
-
-//서버 실행
-server.listen(PORT, () => {
-  console.log(`서버 실행 중: http://localhost:${PORT}`);
 });
