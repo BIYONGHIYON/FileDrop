@@ -11,7 +11,7 @@
 </head>
 <body>
   <div id="wrapper">
-  <h1>FileDrop</h1>
+  <h1 id="title">FileDrop</h1>
 
   <!-- 공유 코드 입력 화면 -->
   <div id="joinScreen">
@@ -73,15 +73,18 @@
     <ul id="fileList"></ul>
   </div>
   <script>
-    function scalePage() {
+    function resizeWrapper() {
+      const wrapper = document.getElementById('wrapper');
       const baseWidth = 1000; // 기준 너비
-      const scale = window.innerWidth / baseWidth;
-      document.getElementById('wrapper').style.transform = `scale(${scale})`;
-    }
+      const scale = Math.min(window.innerWidth / baseWidth, 1);
 
-    window.addEventListener('resize', scalePage);
-    window.addEventListener('DOMContentLoaded', scalePage);
+      wrapper.style.transform = `scale(${scale})`;
+      wrapper.style.left = `${(window.innerWidth - baseWidth * scale) / 2}px`;
+    }
+    window.addEventListener('resize', resizeWrapper);
+    window.addEventListener('DOMContentLoaded', resizeWrapper);
   </script>
+
 
   <script src="/socket.io/socket.io.js"></script>
   <script src="main.js"></script>

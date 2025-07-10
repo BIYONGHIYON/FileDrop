@@ -1,4 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
+  //h1 클릭 시 방 나가기
+  document.getElementById('title').addEventListener('click', () => {
+    if (!currentRoom) return;
+    socket.emit('leave-room', currentRoom);
+    // 초기화
+    currentRoom = '';
+    fileInput.value = '';
+    listEl.innerHTML = '';
+    document.getElementById('capacity').textContent = '';
+    const bar = document.getElementById('capacityBar');
+    if (bar) bar.style.width = '0%';
+
+    // 화면 전환
+    document.getElementById('mainScreen').style.display = 'none';
+    document.getElementById('joinScreen').style.display = 'block';
+  });
+
   const socket = io();
 
   let currentRoom = '';

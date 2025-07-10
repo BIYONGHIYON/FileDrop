@@ -200,6 +200,12 @@ io.on('connection', socket => {
     console.log(`방 입장: ${room}`);
     sendFileList(socket, room); // 파일 목록 전송
   });
+    socket.on('leave-room', (room) => {
+    socket.leave(room);
+    socket.joinedRoom = null; // 현재 방 정보 제거
+    console.log(`클라이언트가 방 ${room} 나감`);
+  });
+
 
   //클라이언트 퇴장 처리
   socket.on('disconnect', () => {
