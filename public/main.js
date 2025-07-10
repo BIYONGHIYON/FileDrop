@@ -77,6 +77,8 @@ document.addEventListener('DOMContentLoaded', () => {
     formData.append('file', file);
     formData.append('room', currentRoom);
 
+    const drop = document.getElementById('dropArea'); // 미리 선언
+
     try {
       const res = await fetch(`/upload/${currentRoom}`, {
         method: 'POST',
@@ -86,22 +88,26 @@ document.addEventListener('DOMContentLoaded', () => {
       const json = await res.json();
       fileInput.value = '';
 
+      // 실패 응답 처리
       if (!res.ok || !json.success) {
-        //업로드 실패: dropArea 흔들리게 하기
-        const drop = document.getElementById('dropArea');
-        drop.classList.add('drop-error');
-
-        setTimeout(() => {
-          drop.classList.remove('drop-error');
-        }, 500);
-
-        return; // 실패 시 종료
+        triggerDropError();  // 흔들기 효과 함수 호출
+        return;
       }
 
     } catch (err) {
       console.error('업로드 오류:', err);
+      triggerDropError(); //네트워크 오류 등도 흔들기 효과
     }
   }
+  function triggerDropError() {
+    const drop = document.getElementById('dropArea');
+    drop.classList.add('drop-error');
+    setTimeout(() => {
+      drop.classList.remove('drop-error');
+    }, 500);
+  }
+
+
 
 
   //파일 선택 시 자동 업로드
