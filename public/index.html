@@ -75,12 +75,15 @@
   <script>
     function resizeWrapper() {
       const wrapper = document.getElementById('wrapper');
-      const baseWidth = 1000; // 기준 너비
-      const scale = Math.min(window.innerWidth / baseWidth, 1);
+      const baseWidth = 1000;
+      const correctionFactor = 1.3;
+      const rawScale = (window.innerWidth / baseWidth) * correctionFactor;
 
+      const scale = Math.min(rawScale, 1); // 최대 100%
       wrapper.style.transform = `scale(${scale})`;
       wrapper.style.left = `${(window.innerWidth - baseWidth * scale) / 2}px`;
     }
+
     window.addEventListener('resize', resizeWrapper);
     window.addEventListener('DOMContentLoaded', resizeWrapper);
   </script>

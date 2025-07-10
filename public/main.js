@@ -149,7 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
         link.textContent = name;
 
         const delBtn = document.createElement('button');
-        delBtn.textContent = '×';
+        delBtn.textContent = '\u274C';
         delBtn.className = 'delete-btn';
         delBtn.type = 'button';
         delBtn.setAttribute('data-name', name);
@@ -204,4 +204,24 @@ document.addEventListener('DOMContentLoaded', () => {
     return (bytes / Math.pow(1024, i)).toFixed(1) + ' ' + units[i];
   }
 
+});
+// 카드 클릭 시 value 표시 후 자동 복원 (모바일 대응)
+document.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('click', () => {
+    const label = card.querySelector('.label');
+    const value = card.querySelector('.value');
+
+    // 이미 전환 중이면 무시
+    if (!label || !value || value.classList.contains('visible')) return;
+
+    label.style.opacity = '0';
+    value.style.opacity = '1';
+    value.classList.add('visible');
+
+    setTimeout(() => {
+      label.style.opacity = '1';
+      value.style.opacity = '0';
+      value.classList.remove('visible');
+    }, 2000); // 2초 후 원래대로
+  });
 });
