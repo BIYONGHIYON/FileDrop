@@ -28,19 +28,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const roomInput = document.getElementById('roomInput');
   const uploadForm = document.getElementById('uploadForm');
 
-  roomInput.addEventListener('input', () => {
-    const isValid = /^\d{4}$/.test(roomInput.value.trim());
-    joinBtn.classList.toggle('show', isValid);
-  });
-
 
   roomInput.addEventListener('input', () => {
-    // 5자리 이상일 경우 자르기
+    // 1. 숫자 이외 문자 제거
+    roomInput.value = roomInput.value.replace(/\D/g, '');
+
+    // 2. 4자리까지만 유지
     if (roomInput.value.length > 4) {
       roomInput.value = roomInput.value.slice(0, 4);
     }
 
-    // 유효성 검사 후 버튼 표시
+    // 3. 유효성 검사 후 버튼 표시
     const isValid = /^\d{4}$/.test(roomInput.value.trim());
     joinBtn.classList.toggle('show', isValid);
   });

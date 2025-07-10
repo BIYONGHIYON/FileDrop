@@ -16,7 +16,14 @@
   <!-- 공유 코드 입력 화면 -->
   <div id="joinScreen">
     <div class="input-container">
-      <input placeholder="Enter Room Code" id="roomInput" type="number" />
+      <input
+        id="roomInput"
+        type="text"
+        placeholder="Enter Room Code"
+        inputmode="numeric"
+        pattern="[0-9]*"
+        maxlength="4"
+      />
     </div>
     <br>
     <button type="button" id="joinBtn">
