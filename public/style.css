@@ -1,4 +1,4 @@
-body{
+html, body{
     margin: 0;
     padding: 0;
     height: 100%;
@@ -6,6 +6,12 @@ body{
     color: #cccccc;
     text-align:center;
     font-family:'Roboto', sans-serif;
+    overflow-x: hidden;
+}
+#wrapper {
+  transform-origin: top left;
+  width: 1000px; /* 기준 너비 */
+  margin: 0 auto;
 }
 h1{
     margin-top:0.3em;
@@ -68,15 +74,7 @@ input[type=number]::-webkit-outer-spin-button {
         0px 0px 100px darkblue;
 }
 
-@media (max-width: 500px) {
-    .input-container {
-        flex-direction: column;
-    }
 
-    .input-container input {
-        border-radius: 0.8rem;
-    }
-}
 
 #joinBtn {
     opacity: 0;

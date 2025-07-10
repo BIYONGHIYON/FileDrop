@@ -10,6 +10,7 @@
   <title>FileDrop</title>
 </head>
 <body>
+  <div id="wrapper">
   <h1>FileDrop</h1>
 
   <!-- 공유 코드 입력 화면 -->
@@ -71,8 +72,19 @@
     </div>
     <ul id="fileList"></ul>
   </div>
+  <script>
+    function scalePage() {
+      const baseWidth = 1000; // 기준 너비
+      const scale = window.innerWidth / baseWidth;
+      document.getElementById('wrapper').style.transform = `scale(${scale})`;
+    }
+
+    window.addEventListener('resize', scalePage);
+    window.addEventListener('DOMContentLoaded', scalePage);
+  </script>
 
   <script src="/socket.io/socket.io.js"></script>
   <script src="main.js"></script>
+  </div>
 </body>
 </html>
