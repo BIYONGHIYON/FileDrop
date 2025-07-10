@@ -156,7 +156,7 @@ input[type=number]::-webkit-outer-spin-button {
   flex-direction: column;
   isolation: isolate;
   position: relative;
-  width: 30rem;
+  width: 32rem;
   height: 4rem;
   margin: auto;
   margin-top:10em;
@@ -259,6 +259,16 @@ input[type=number]::-webkit-outer-spin-button {
     font-size: 0.9rem;
     width: 75%;
 }
+a{
+    text-decoration: none;
+    color: #cccccc;  
+}
+a:visited,
+a:active,
+a:hover {
+  color: #cccccc;
+  text-decoration: none;
+}
 
 .box{
     display: flex;
@@ -313,7 +323,7 @@ input[type=number]::-webkit-outer-spin-button {
 .value {
   position: absolute;
   z-index: 2;
-  color: #3654ff;
+  color: #32a6ff;
   font-size: 1.4rem;
   font-weight: 600;
   opacity: 0;
