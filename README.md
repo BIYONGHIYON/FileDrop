@@ -37,22 +37,7 @@
 
 ## 📥 사용 방법 (Usage)
 
-### 1. 설치 (Setup)
-
-```bash
-git clone https://github.com/BIYONGHIYON/FileDrop.git
-cd FileDrop
-npm install
-node index.js
-```
-
-### 2. 접속 (Run)
-
-브라우저에서 아래 주소로 접속합니다:
-
-📎 http://localhost:3000
-
----
+### filedrop-nqub.onrender.com 사이트로 접속 후 잠시 대기하면 연결됩니다.
 
 ## 🛠 기술 스택 (Tech Stack)
 
