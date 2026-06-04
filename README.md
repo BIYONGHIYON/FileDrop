@@ -37,7 +37,7 @@
 
 ## 📥 사용 방법 (Usage)
 
-[FileDrop](https://filedrop-nqub.onrender.com/) 사이트로 접속 후 잠시 대기하면 연결됩니다.
+<a href ="https://filedrop-nqub.onrender.com/" target="_blank">FileDrop</a> 사이트로 접속 후 잠시 대기하면 연결됩니다.
 
 ---
 
