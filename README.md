@@ -37,7 +37,7 @@
 
 ## 📥 사용 방법 (Usage)
 
-### filedrop-nqub.onrender.com 사이트로 접속 후 잠시 대기하면 연결됩니다.
+### [FileDrop](filedrop-nqub.onrender.com) 사이트로 접속 후 잠시 대기하면 연결됩니다.
 
 ## 🛠 기술 스택 (Tech Stack)
 
