@@ -39,8 +39,8 @@
 
 [FileDrop](filedrop-nqub.onrender.com) 사이트로 접속 후 잠시 대기하면 연결됩니다.
 
-### 로컬 사용자
-## 1. 설치 (Setup)
+## 로컬 사용자
+### 1. 설치 (Setup)
 
 ```bash
 git clone https://github.com/BIYONGHIYON/FileDrop.git
@@ -49,7 +49,7 @@ npm install
 node index.js
 ```
 
-## 2. 접속 (Run)
+### 2. 접속 (Run)
 
 브라우저에서 아래 주소로 접속합니다:
 
