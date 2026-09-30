@@ -45,6 +45,7 @@
 ```bash
 git clone https://github.com/BIYONGHIYON/FileDrop.git
 cd FileDrop
+cd server
 npm install
 node index.js
 ```
