@@ -2,19 +2,25 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link href="style.css?after" rel="stylesheet" type="text/css" />
-  <link rel="icon" href="icon.png?ver=1" />
-  <link rel="apple-touch-icon" href="icon.png?ver=1" />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="description" content="4자리 코드로 기기 간 파일과 텍스트를 바로 주고받는 FileDrop" />
+  <meta name="theme-color" content="#000000" />
   <title>FileDrop</title>
+  <link rel="icon" href="icon.png?ver=2" />
+  <link rel="apple-touch-icon" href="icon.png?ver=2" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" />
+  <link rel="stylesheet" href="style.css?v=4" />
 </head>
 <body>
-  <div id="wrapper">
-  <h1 id="title">FileDrop</h1>
+  <!-- 서버 연결 상태 -->
+  <div id="connBanner" class="conn-banner" hidden>
+    <span class="spinner"></span>
+    <span id="connText">서버에 연결하는 중…</span>
+  </div>
 
-  <!-- 공유 코드 입력 화면 -->
-  <div id="joinScreen">
+  <!-- ───────── 입장 화면 (기존 디자인 유지) ───────── -->
+  <main id="joinScreen" class="join-classic">
+    <h1 id="title">FileDrop</h1>
     <div class="input-container">
       <input
         id="roomInput"
@@ -54,66 +60,114 @@
         </a>
       </div>
     </div>
-  </div>
+  </main>
 
-  <!-- 본 화면 (파일 업로드) -->
-  <div id="mainScreen" style="display: none;">
-    <div class="box">
-      <div class="left-box">
-        <div class="notification" id="note2">
-          <div class="notiglow"></div>
-          <div class="notiborderglow"></div>
-          <div class="notititle">Notice</div>
-          <div class="notibody" id="noticeText">Max 500MB per Room</div>
-        </div>
-        <div class="card">
-          <div class="label">Room Number</div>
-          <div class="value" id="result">1234</div>
-        </div>
-        <div class="card">
-          <div class="label">Used Capacity</div>
-          <div class="value" id="capacity"></div>
-            <div class="progress-container">
-              <div class="progress-bar" id="capacityBar"></div>
-            </div>
-        </div>
+  <!-- ───────── 방 화면 ───────── -->
+  <div id="roomScreen" class="room" hidden>
+    <header class="topbar">
+      <button type="button" class="wordmark" id="homeBtn" title="방 나가기">FileDrop</button>
+      <div class="topbar-actions">
+        <button type="button" class="btn" id="shareBtn">QR · 링크</button>
+        <button type="button" class="btn btn-ghost" id="leaveBtn">나가기</button>
       </div>
-      <div class="right-box">
-        <form id="uploadForm" enctype="multipart/form-data">
-          <label for="file" id="dropArea" class="file-upload-label">
-            <div class="file-upload-design">
-              <svg viewBox="0 0 640 512" height="1em">
-                <path d="M144 480C64.5 480 0 415.5 0 336c0-62.8 40.2-116.2 96.2-135.9c-.1-2.7-.2-5.4-.2-8.1c0-88.4 71.6-160 160-160c59.3 0 111 32.2 138.7 80.2C409.9 102 428.3 96 448 96c53 0 96 43 96 96c0 12.2-2.3 23.8-6.4 34.6C596 238.4 640 290.1 640 352c0 70.7-57.3 128-128 128H144zm79-217c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l39-39V392c0 13.3 10.7 24 24 24s24-10.7 24-24V257.9l39 39c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0l-80 80z"></path>
-              </svg>
-              <p>Drag and Drop</p>
-              <span class="browse-button">Browse file</span>
-            </div>
-            <input id="file" type="file" name="file" required />
-          </label>
+    </header>
+
+    <section class="room-info">
+      <button type="button" class="room-code" id="roomChip" title="눌러서 코드 복사">
+        <span class="room-code-label">Room</span>
+        <span class="room-code-value" id="roomCode">0000</span>
+      </button>
+      <div class="room-stat">
+        <span class="room-stat-label">접속</span>
+        <span class="room-stat-value"><span id="usersCount">1</span>대</span>
+      </div>
+      <div class="room-cap">
+        <div class="room-cap-row">
+          <span class="room-stat-label">사용 용량</span>
+          <span class="room-stat-value"><span id="capUsed">0 B</span> <span class="dim">/ <span id="capMax">500 MB</span></span></span>
+        </div>
+        <div class="capacity-track"><div class="capacity-bar" id="capBar"></div></div>
+      </div>
+    </section>
+
+    <nav class="tabs" role="tablist">
+      <button type="button" class="tab active" data-tab="files" role="tab">Files <span class="count" id="filesCountTab">0</span></button>
+      <button type="button" class="tab" data-tab="texts" role="tab">Text <span class="count" id="textsCountTab">0</span></button>
+    </nav>
+
+    <div class="panels">
+      <!-- 파일 -->
+      <section class="panel" id="filesPanel" data-panel="files">
+        <div class="panel-head">
+          <h2>Files <span class="count" id="filesCount">0</span></h2>
+          <button type="button" class="link-btn" id="zipBtn" disabled>전체 받기 (zip)</button>
+        </div>
+
+        <label class="dropzone" id="dropzone">
+          <input type="file" id="fileInput" multiple hidden />
+          <svg viewBox="0 0 640 512" aria-hidden="true"><path d="M144 480C64.5 480 0 415.5 0 336c0-62.8 40.2-116.2 96.2-135.9c-.1-2.7-.2-5.4-.2-8.1c0-88.4 71.6-160 160-160c59.3 0 111 32.2 138.7 80.2C409.9 102 428.3 96 448 96c53 0 96 43 96 96c0 12.2-2.3 23.8-6.4 34.6C596 238.4 640 290.1 640 352c0 70.7-57.3 128-128 128H144zm79-217c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0l39-39V392c0 13.3 10.7 24 24 24s24-10.7 24-24V257.9l39 39c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-80-80c-9.4-9.4-24.6-9.4-33.9 0l-80 80z"/></svg>
+          <p>Drag and Drop</p>
+          <span class="browse-button">Browse files</span>
+          <span class="dropzone-hint">여러 개 선택 가능 · 붙여넣기(Ctrl/⌘+V)로도 업로드</span>
+        </label>
+
+        <ul class="list" id="uploadList"></ul>
+        <ul class="list" id="fileList"></ul>
+        <div class="empty" id="filesEmpty">아직 파일이 없습니다</div>
+      </section>
+
+      <!-- 텍스트 -->
+      <section class="panel" id="textsPanel" data-panel="texts">
+        <div class="panel-head">
+          <h2>Text <span class="count" id="textsCount">0</span></h2>
+        </div>
+
+        <form class="composer" id="textForm">
+          <textarea id="textInput" rows="4" placeholder="공유할 텍스트, 링크, 메모" maxlength="100000"></textarea>
+          <div class="composer-foot">
+            <span class="composer-hint">Ctrl/⌘ + Enter</span>
+            <button type="submit" class="btn" id="textSend" disabled>공유</button>
+          </div>
         </form>
-      </div>
+
+        <ul class="list" id="textList"></ul>
+        <div class="empty" id="textsEmpty">공유된 텍스트가 없습니다</div>
+      </section>
     </div>
-    <ul id="fileList"></ul>
   </div>
-  <script>
-    function resizeWrapper() {
-      const wrapper = document.getElementById('wrapper');
-      const baseWidth = 1000;
-      const correctionFactor = 1.3;
-      const rawScale = (window.innerWidth / baseWidth) * correctionFactor;
 
-      const scale = Math.min(rawScale, 1); // 최대 100%
-      wrapper.style.transform = `scale(${scale})`;
-      wrapper.style.left = `${(window.innerWidth - baseWidth * scale) / 2}px`;
-    }
+  <!-- 전체 화면 드래그 오버레이 -->
+  <div class="drag-overlay" id="dragOverlay" hidden>
+    <div class="drag-overlay-inner">Drop to upload</div>
+  </div>
 
-    window.addEventListener('resize', resizeWrapper);
-    window.addEventListener('DOMContentLoaded', resizeWrapper);
-  </script>
+  <!-- 공유 모달 -->
+  <dialog id="shareDialog" class="dialog">
+    <form method="dialog" class="dialog-inner">
+      <h3>다른 기기에서 입장하기</h3>
+      <p class="muted">휴대폰 카메라로 QR을 찍거나 링크를 보내세요.</p>
+      <img id="qrImg" class="qr" alt="방 입장 QR 코드" width="200" height="200" />
+      <div class="share-code">코드 <b id="shareCode">0000</b></div>
+      <div class="share-link">
+        <input id="shareLink" readonly />
+        <button type="button" class="btn" id="copyLinkBtn">복사</button>
+      </div>
+      <button class="btn btn-ghost btn-block" value="close">닫기</button>
+    </form>
+  </dialog>
 
+  <!-- 이미지 미리보기 -->
+  <dialog id="previewDialog" class="dialog preview">
+    <form method="dialog">
+      <button class="preview-close" aria-label="닫기">✕</button>
+      <img id="previewImg" alt="" />
+      <div class="preview-name" id="previewName"></div>
+    </form>
+  </dialog>
+
+  <div class="toasts" id="toasts" aria-live="polite"></div>
 
   <script src="/socket.io/socket.io.js"></script>
-  <script src="main.js"></script>
-  </div>
+  <script src="main.js?v=5"></script>
 </body>
 </html>
